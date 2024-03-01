@@ -136,3 +136,7 @@ p {
   background-color: var(--cl-pr);
   font-weight: bold;
 }
+
+.swap-btn.disable {
+  background-color: var(--btn-bg);
+}

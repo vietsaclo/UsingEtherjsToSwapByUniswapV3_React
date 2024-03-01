@@ -93,6 +93,24 @@ class Funcs {
         });
     });
   };
+
+  static fun_trimAddress = (address: string, trimLength: number = 3, trimLeft: number = 0, trimRight: number = 0) => {
+    if (!address) return "Load Address Failure!";
+    if (address.length > 12) {
+      if (trimLength)
+        return (
+          address.substring(0, trimLeft || trimLength) +
+          "..." +
+          address.substring(address.length - (trimRight || trimLength), address.length)
+        );
+      return (
+        address.substring(0, 6) +
+        "..." +
+        address.substring(address.length - 9, address.length)
+      );
+    }
+    return address;
+  };
 }
 
 export default Funcs;

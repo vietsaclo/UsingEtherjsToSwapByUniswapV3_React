@@ -5,22 +5,18 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app-store/store';
-import { Web3ReactProvider } from '@web3-react/core'
-import { Web3Provider } from "@ethersproject/providers";
-
-const getLibrary = (provider: any) => {
-  return new Web3Provider(provider);
-}
+import ContextProviderWeb3ModalConnect from './utils/ContextProviderWeb3ModalConnect';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <Web3ReactProvider getLibrary={getLibrary}>
+      <ContextProviderWeb3ModalConnect>
         <App />
-      </Web3ReactProvider>,
+      </ContextProviderWeb3ModalConnect>
     </Provider>
   </BrowserRouter>
 );
