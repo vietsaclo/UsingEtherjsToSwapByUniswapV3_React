@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --cl-pr: rgb(252, 114, 255);
+  --bg-pr: rgb(255, 239, 255);
+  --text-pr: rgb(34, 34, 34);
+  --text-sec: rgb(125, 125, 125);
+  --text-white: rgb(255, 255, 255);
+  --btn-bg: rgba(34, 34, 34, 0.07);
+  --bg-sec: rgb(249, 249, 249);
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.header {
+  width: 100%;
+  height: 68px;
+}
+
+.wallet-connect-btn {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: var(--cl-pr);
+  background-color: var(--bg-pr);
+}
+
+.swap-task {
+  width: fit-content;
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: var(--text-cl);
+  background-color: var(--btn-bg);
+}
+
+.you-pay-sec {
+  padding: 16px;
+  height: 120px;
+  color: var(--text-sec);
+  background-color: var(--bg-sec);
+  border-radius: 16px;
+}
+
+.pay-amount {
+  font-size: 36px;
+  font-weight: 485;
+  max-height: 44px;
+}
+
+.pay-token-btn {
+  border-radius: 18px;
+  height: 36px;
+  padding: 0 16px 0 4px;
+  min-width: 50px;
+  border: 1px solid rgba(34, 34, 34, 0.07);
+  background-color: rgb(255, 255, 255);
+}
+
+.token-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.token-name {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 12px;
+  background-color: var(--btn-bg);
+  font-size: 8px;
+}
+
+.token-icon-img {
+  width: 40%;
+  height: 40%;
+  border-radius: 4px;
+  background-color: #dde2fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: rgb(255, 255, 255) solid 1.5px;
+  position: absolute;
+  left: 65%;
+  top: 65%;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.text-highlight {
+  font-weight: bold;
+  color: var(--cl-pr);
+}
+
+.arrow-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: var(--bg-sec);
+  border: 4px solid rgb(255, 255, 255);
+  z-index: 2;
+  margin: -18px auto;
+}
+
+.arrow-down-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.swap-btn {
+  border: 0;
+  padding: 16px;
+  margin-top: 4px;
+  border-radius: 16px;
+  font-size: 20px;
+  color: var(--text-white);
+  background-color: var(--cl-pr);
+  font-weight: bold;
+}
