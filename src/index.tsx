@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app-store/store';
-import ContextProviderWeb3ModalConnect from './utils/ContextProviderWeb3ModalConnect';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,9 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <ContextProviderWeb3ModalConnect>
-        <App />
-      </ContextProviderWeb3ModalConnect>
+      <App />
     </Provider>
   </BrowserRouter>
 );

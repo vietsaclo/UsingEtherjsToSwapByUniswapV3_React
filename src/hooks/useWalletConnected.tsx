@@ -1,23 +1,24 @@
 import { ethers } from "ethers";
-import { WalletClient } from "viem";
+import { useSelector } from "react-redux";
+import { I_SesstionUser } from "../utils/Interfaces";
+import { MyWeb3Modal } from "../utils/MyWeb3Configs";
 
 const useWalletConnected = () => {
-  const UseGetProvider = (client: WalletClient) => {
-    const { chain, transport } = client;
-    const network = {
-      chainId: chain?.id,
-      name: chain?.name,
-      ensAddress: chain?.contracts?.ensRegistry?.address,
-    };
-    // You can use whatever provider that fits your need here.
-    const provider = new ethers.BrowserProvider(transport, network);
+  const sessionUserReducer: I_SesstionUser = useSelector((state: any) => state.sessionUser);
+
+  const UseGetProvider = async () => {
+    if (!sessionUserReducer.account) return null;
+
+    const connectWallet = await MyWeb3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connectWallet);
     return provider;
   }
 
-  const UseGetSigner = async (client: WalletClient) => {
-    const { account } = client;
-    const provider = UseGetProvider(client);
-    const signer = await provider.getSigner(account?.address);
+  const UseGetSigner = async () => {
+    const provider = await UseGetProvider();
+    if (!provider) return null;
+
+    const signer = provider.getSigner(sessionUserReducer.account);
     return signer;
   }
 

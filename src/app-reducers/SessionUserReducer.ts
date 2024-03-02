@@ -1,31 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app-store/store";
+import { I_SesstionUser } from "../utils/Interfaces";
 
-interface ISessionUser {
-  id?: number,
-  userName?: string,
-  fullName?: string,
-}
-
-const initialState: ISessionUser = {}
+const initialState: I_SesstionUser = {}
 
 const SessionUserSlice = createSlice({
   name: 'SessionUserReducer',
   initialState: initialState,
   reducers: {
-    userLogin: (state, action: PayloadAction<ISessionUser>) => {
-      const { id, userName, fullName } = action.payload;
-      state.id = id;
-      state.userName = userName;
-      state.fullName = fullName;
+    connectWalletReducer: (state, action: PayloadAction<I_SesstionUser>) => {
+      const { account, chainId } = action.payload;
+      state.account = account;
+      state.chainId = chainId;
     },
-    userLogout: (state) => {
-      state.id = state.fullName = state.userName = undefined;
+    disconnectWalletReducer: (state) => {
+      state.account = state.chainId = undefined;
     },
   }
 });
 
-export const { userLogin, userLogout } = SessionUserSlice.actions;
+export const { connectWalletReducer, disconnectWalletReducer } = SessionUserSlice.actions;
 
 export const selectSessionUser = (state: RootState) => state.sessionUser;
 

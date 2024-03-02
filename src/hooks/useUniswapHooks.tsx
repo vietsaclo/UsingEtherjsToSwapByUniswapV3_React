@@ -1,18 +1,21 @@
-import { erc20Abi } from "viem";
-import { ethers } from "ethers";
-import { useAccount, useWalletClient } from "wagmi";
 import useWalletConnected from "./useWalletConnected";
 import { UNI_SWAP_CONFIG } from "../utils/Consts";
-import { I_SwapReponse } from "../utils/Interfaces";
+import { I_SesstionUser, I_SwapReponse } from "../utils/Interfaces";
+import { ethers } from "ethers";
+import { useSelector } from "react-redux";
+
+const erc20Abi = require('../utils/json/Erc20abi.json');
 const { abi: SwapRouterABI } = require('@uniswap/v3-periphery/artifacts/contracts/interfaces/ISwapRouter.sol/ISwapRouter.json')
 
 const useUniswapHooks = () => {
-  const { data: walletClient } = useWalletClient();
-  const { address: userAddress } = useAccount();
   const { UseGetProvider, UseGetSigner } = useWalletConnected();
+  const sessionUserReducer: I_SesstionUser = useSelector((state: any) => state.sessionUser);
 
   const UseSwap = async (fromAdd: string, toAdd: string, amount: number, forkApprove: boolean = false): Promise<I_SwapReponse> => {
-    if (!walletClient) {
+    const provider = await UseGetProvider();
+    const signer = await UseGetSigner();
+
+    if (!provider || !signer) {
       const result: I_SwapReponse = {
         status: 'ERROR',
         result: null,
@@ -20,10 +23,7 @@ const useUniswapHooks = () => {
       return result;
     };
     // format amount
-    const amountFormat = ethers.parseUnits(amount.toString());
-
-    const provider = UseGetProvider(walletClient);
-    const signer = await UseGetSigner(walletClient);
+    const amountFormat = ethers.utils.parseUnits(amount.toString());
 
     if (!forkApprove) {
       // Approve from erc20 token ?
@@ -35,14 +35,14 @@ const useUniswapHooks = () => {
       const tokenContractSendConnect: any = tokenContractSend.connect(signer);
       // check approve
       const checkApproveMethod = tokenContractSendConnect.allowance;
-      const resultCheck = await checkApproveMethod(...[userAddress, UNI_SWAP_CONFIG.SWAP_ROUTER]);
-      const resultCheckValue = ethers.formatEther(resultCheck);
+      const resultCheck = await checkApproveMethod(...[sessionUserReducer.account, UNI_SWAP_CONFIG.SWAP_ROUTER]);
+      const resultCheckValue = ethers.utils.formatEther(resultCheck);
 
-      const isApproved = Number(resultCheckValue) >= Number(ethers.formatEther(amountFormat));
+      const isApproved = Number(resultCheckValue) >= Number(ethers.utils.formatEther(amountFormat));
       // const isApproved = false;
       if (!isApproved) {
         const approveMethod = tokenContractSendConnect.approve;
-        const tx = await approveMethod(UNI_SWAP_CONFIG.SWAP_ROUTER, ethers.parseUnits((amount * 10000).toString()));
+        const tx = await approveMethod(UNI_SWAP_CONFIG.SWAP_ROUTER, ethers.utils.parseUnits((amount * 10000).toString()));
         const result: I_SwapReponse = {
           status: 'APPROVING',
           result: tx,
@@ -55,7 +55,7 @@ const useUniswapHooks = () => {
       tokenIn: fromAdd, // Token From Address
       tokenOut: toAdd, // Token Send To Address
       fee: UNI_SWAP_CONFIG.FEE,
-      recipient: userAddress,
+      recipient: sessionUserReducer.account,
       deadline: Math.floor(Date.now() / 1000) + (60 * 10),
       amountIn: amountFormat,
       amountOutMinimum: 0,
