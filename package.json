@@ -43,6 +43,7 @@
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "start:dev": "yarn && yarn start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build:prod": "GENERATE_SOURCEMAP=false cat .env.prod > .env && react-scripts build && cat .env.dev > .env",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -52,6 +53,7 @@
       "react-app/jest"
     ]
   },
+  "devDependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -63,6 +65,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {}
+  }
 }

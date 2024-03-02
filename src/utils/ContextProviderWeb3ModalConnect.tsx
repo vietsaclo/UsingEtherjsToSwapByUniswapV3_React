@@ -11,12 +11,13 @@ import { PropsWithChildren } from 'react'
 const queryClient = new QueryClient()
 
 // 1. Get projectId at https://cloud.walletconnect.com
-const projectId = String(process.env.REACT_APP_WEB3_MODAL_WALLET_CONNECT);
+// const projectId = String(process.env.REACT_APP_WEB3_MODAL_WALLET_CONNECT);
+const projectId = 'f78180a8e45ede6927e3eeda2335c600';
 
 // 2. Create wagmiConfig
 const metadata = {
   name: 'Web3Modal',
-  description: 'Web3Modal Example',
+  description: 'Web3Modal Example 22',
   url: 'https://web3modal.com', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
@@ -36,7 +37,7 @@ const config = defaultWagmiConfig({
 createWeb3Modal({
   wagmiConfig: config,
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
+  // enableAnalytics: true // Optional - defaults to your Cloud configuration
 })
 
 type web3ModalProps = PropsWithChildren<{
